@@ -1,0 +1,531 @@
+	1.  microservices.io :
+	- Choreography
+	- Orchestration
+	- Deployment Pattern
+		- Multiple services per host : Run multiple instances of different services on a host (Physical or Virtual machine).
+			The benefits of this pattern include:
+				- More efficient resource utilization than the Service Instance per host pattern
+			The drawbacks of this approach include:
+				- Risk of conflicting resource requirements
+				- Risk of conflicting dependency versions
+				- Difficult to limit the resources consumed by a service instance
+				- If multiple services instances are deployed in the same process then its difficult to monitor the resource consumption of each service instance. Its also impossible to isolate each instance
+		- Service instance per host : Deploy each single service instance on its own host
+			The benefits of this approach include:
+				- Services instances are isolated from one another
+				- There is no possibility of conflicting resource requirements or dependency versions
+				- A service instance can only consume at most the resources of a single host
+				- Its straightforward to monitor, manage, and redeploy each service instance
+			The drawbacks of this approach include:
+				- Potentially less efficient resource utilization compared to Multiple Services per Host because there are more hosts
+		- Service instance per VM : 
+			Package the service as a virtual machine image and deploy each service instance as a separate VM
+		- Service instance per container : 
+			Package the service as a (Docker) container image and deploy each service instance as a container
+		- Serverless deployment : 
+			Use a deployment infrastructure that hides any concept of servers (i.e. reserved or preallocated resources)- physical or virtual hosts, or containers. The infrastructure takes your service’s code and runs it.
+		- Service Deployment Platform : 
+			Use a deployment platform, which is automated infrastructure for application deployment. It provides a service abstraction, which is a named, set of highly available (e.g. load balanced) service instances.
+	- Communication
+		- Remote Procedure Invocation
+			- REST
+			- gRPC
+			- Apache Thrift
+		- Messages
+			- RabbitMQ
+			- Kafka
+	- Security
+		- Implement security at each microservice level
+		- Implement security using a sidecar
+		- Implement security using a shared gateway
+		- Transport layer security
+		- Transport layer security with message layer security using authentication
+		- Transport layer security with message layer security using authentication and authorization
+	- Resilency
+		- Retry
+		- Circuit Breaker : Circuit breaker represents a connection point between parts of the system. With circuit breaker we can configure specific cases in which parts of the system will be ‘connected’ i.e., when services will be able to communicate with each other, when they will not, and for how long. All of that is achieved with the ‘state’ property of the circuit breaker.
+		- Cache
+		- TimeLimiter : limit the amount of time spent calling a remote service
+	- Reliability
+		- Load balancing
+		- Health Check
+		- Rate Limiter : this functionality allows limiting access to some service
+		- BulkHead : number of concurrent calls to a particular service.
+	- Service Discovery
+		- Client-side : Eureka, Ribbon Client
+		- Server-side : Elastic Load Balancer, Kubernetes
+	Observability
+		- Log aggregation : 
+			- Logstash
+			- Grafana Loki
+			- Elastic stask : Elasticsearch, Logstash and Kibana
+			- Scribe
+		- Application metrics : prometheus
+		- Audit logging : 
+		- Distributed tracing : Sleth help to log the request which helps to trace it across multiple services.
+			- Jaeger
+			- Zipkin
+			- Spunk
+			- New Relic			
+		- Exception tracking : 
+		- Health check API : actuator
+		- Log deployments and changes : Helm
+	Deisgn Pattern:
+		- Aggregator
+		- API gateway
+		- Asynchronous
+		- Backend for frontend
+		- Circuit breaker
+		- CQRS
+		- Database per service
+		- Shared database
+		- Event sourcing
+		- Synchronous
+		- Saga pattern
+	Service Mesh
+		- 
+2.  java core + java 8 features (https://www.javatpoint.com/java-8-features)
+	- Stream : 
+		Java streams enable functional-style operations on streams of elements. A stream is an abstraction of a non-mutable collection of functions applied in some order to the data. A stream is not a collection where you can store elements
+	- FunctionalInterface :
+		Functional interfaces, programmers can pass a function as a parameter instead of a reference object, which reduces the amount of boilerplate code you have to write.
+	- Method Referencing
+	- Lambda
+	- Collector Class
+	- forEach
+	- Optional
+	- String Joiner
+	- Default Method
+	- Interface private, static Method
+	- map vs flatmap
+	- 
+3.  Design Patterns 
+	Creational:
+		- Factory
+		- Abstract Factory
+		- Builder
+		- Singelton
+		- Prototype
+	Behavioral:
+		- Strategy
+		- Observer
+		- State
+		- Command
+		- Chain Of Responsibility
+		- Iterator
+		- Interpreter
+		- Medator
+		- Memento
+		- Template
+		- Visitor
+	Structural:
+		- Decorator
+		- Adapter
+		- Facade
+		- Bridge
+		- Proxy
+		- Flywight
+		- Composite		
+4.  Spring data jpa
+	- JPA Specification
+		- Predicate : Combination of multiple criteria
+		- Root : Its a base object against which criteria will be applied
+		- CriteriaQuery : Create query progamtically
+		- CriteriaBuilder : Apply condition on query
+	- EntityManager : 
+		The EntityManager API is used to create and remove persistent entity instances, to find entities by their primary key, and to query over entities.
+	- Persistence Context :
+		 A persistence context is a set of entity instances in which for any persistent entity identity there is a unique entity instance. Within the persistence context, the entity instances and their lifecycle are managed
+	- JPA Objects
+		- Entity
+		- MappedSuperClass
+		- Embeddable
+		- Embedded ID
+		- ID
+		- Session
+		- Criteria
+5.  Spring boot
+	- webclient
+	- webflux
+6.  Hibernate
+	- SessionFactory : It gives a factory method to create session objects and get clients of ConnectionProvider. It is immutable and holds a second-level cache (optional) of data
+	- Session : A short-lived object acting as an interface between the Java application objects and database data. It is usually used to generate query, transaction, and criteria objects. It has a first-level cache (mandatory) of data.
+	- Transaction : An object specifying the atomic unit of work. It has methods for transaction management and is optional.
+	- TransctionFactory : A factory of transaction objects. It is optional. 
+	- ConnectionProvider : A factory of JDBC connection objects. It is optional and gives abstraction to the application from the DriverManager.
+	- Inheritance Mapping
+		- MappedSuperClass : No table created from Superclass
+		- Single Table : Creates one table for each hieararchy
+		- Joined Table : Each class has its own table so join will be required
+		- Table per class : All the properties of a class are in its table, so no join is required
+	- Cache
+		- First Level Cache
+		- Second Level Cache
+		- Query Cache
+	- Entity State
+		- transient
+		- managed
+		- detached
+		- deleted
+	- merge vs update :
+		update() method can not be used when the same object already exist in the session.NonUniqueObjectException
+		merge() method can be used when the same object already exist in the session
+	- Mappings : Example
+		- One-To-One
+		- One-To-Many
+		- Many-To-One
+		- Many-To-Many
+7.  Jenkins
+8.  Helm
+9.  SOLID principles : Done
+	- Single Responsibility : every Java class must perform a single functionality
+	- Open/Close : the module should be open for extension but closed for modification
+	- Liskov : derived classes must be completely substitutable for their base classes
+	- Interface Segregation : larger interfaces split into smaller ones
+	- Dependency Inversion : The principle states that we must use abstraction (abstract classes and interfaces) instead of concrete implementations. High-level modules should not depend on the low-level module but both should depend on the abstraction
+10. Cohesion : Done
+	- Low cohesion : cluttered class
+	- High Cohesion : Single Responsibility following
+11. Idempotence : is a property of some operations such that no matter how many times you execute them, you achieve the same result.
+12. Java memory structure : Done
+	- Young Gen
+	- S0
+	- S1
+	- Old Gen
+	- Metaspace (outside of heap)
+13. Garbage collection
+	- Serial GC
+	- Parallel GC
+	- CMS : Concurrent Mark Sweep
+	- G1
+	- Z garbage collector
+14. Collections
+	- HashSet
+	- TreeSet
+	- LinkedHashSet
+	- ArrayList
+	- LinkedList
+	- TreeMap
+	- ArrayDeque
+	- HashMap
+	- LinkedHashMap
+	- Fail-safe and fail-fast : no concurrent modification error and concurrent modification error
+15. Threads
+	Synchronized blocks don’t offer any mechanism of a waiting queue and after the exit of one thread, any thread can take the lock. This could lead to starvation of resources for some other thread for a very long period of time. 
+	- Lock Objects 
+		- Reenterent Lock : 
+			- The ReentrantLock class implements the Lock interface and provides synchronization to methods while accessing shared resources.
+			- ReentrantLock allows threads to enter into the lock on a resource more than once.
+			- Reentrant Locks also offer a fairness parameter, by which the lock would abide by the order of the lock request i.e. after a thread unlocks the resource, the lock would go to the thread which has been waiting for the longest time.
+		- ReadWrite Lock
+			- ReentrantReadWriteLock 
+				- ReentrantReadWriteLock class implements the ReadWriteLock interface.
+				- Read Lock – If no thread acquired the write lock or requested for it, multiple threads can acquire the read lock.
+				- Write Lock – If no threads are reading or writing, only one thread can acquire the write lock.
+		- Stamped Lock
+			- Introduced in java8
+			- lock acquisition methods return a stamp that is used to release a lock or to check if the lock is still valid:
+		- Semaphore 
+			- A semaphore controls access to a shared resource through the use of a counter. If the counter is greater than zero, then access is allowed. If it is zero, then access is denied.
+			e.g. if N persons are allowed to watch show in Threater and if one person leave then others are allowed to watch the show.
+	- Concurrent Collections
+		- BlockingQueue : 
+		- ConcurrentHashMap : Done
+		- CopyOnWriteArrayList and CopyOnWriteArraySet : allowing multiple concurrent readers and replacing the whole list on write operation.
+		- ConcurrentSkipListMap and ConcurrentSkipListSet
+	- Atomic Variables : Done (used Compare And Swap`)
+	- ThreadLocalRandom : Done
+	- ThreadLocal : Done
+	- Starvation : Done
+		Starvation describes a situation where a thread is unable to gain regular access to shared resources and is unable to make progress. If one thread invokes this method frequently, other threads that also need frequent synchronized access to the same object will often be blocked.
+	- Livelock : Done
+		is a loop in which threads are busy in responding each other requests and unable to proceed to conclusion. If a thread acts to the response to the action of another thread.
+		Realtime example
+	- Deadlock : Done
+	- Executor Interface : Done
+		- Executor
+		- ExecutorService
+		- ScheduledExecutorService
+	- Thread Pools : Using worker threads minimizes the overhead due to thread creation. Thread objects use a significant amount of memory, and in a large-scale application, allocating and deallocating many thread objects creates a significant memory management overhead.
+		- newFixedThreadPool : Creates a thread pool that reuses a fixed number of threads operating off a shared unbounded queue. At any point, at most nThreads threads will be active processing tasks. If additional tasks are submitted when all threads are active, they will wait in the queue until a thread is available
+		- newCachedThreadPool : Creates a thread pool that creates new threads as needed, but will reuse previously constructed threads when they are available. These pools will typically improve the performance of programs that execute many short-lived asynchronous tasks.
+		- newSingleThreadExecutor : Creates an Executor that uses a single worker thread operating off an unbounded queue.Tasks are guaranteed to execute sequentially, and no more than one task will be active at any given time.
+	- Fork/Join : Done
+		- It is designed for work that can be broken into smaller pieces recursively.
+		- The fork/join framework distributes tasks to worker threads in a thread pool
+	- Cyclic Barrier : Done
+		- Allows a set of threads to all wait for each other to reach a common barrier point.
+		- It maintains a count of threads
+		- If one thread is interrupted while waiting then all other waiting threads will throw BrokenBarrierException
+		- Until and unless all persons enters into Theater play will not begin
+	- Countdown latch : Done
+		- Allows one or more threads to wait until a set of operations being performed in other threads completes
+		- It maintains a count of tasks
+		- Only current thread will throw InterruptedException. It will not impact other threads
+		- Until and unless all persons leave theater no one is allowed to enter.
+16. OOPS principles : Done
+	- Encapsulation
+	- Abstraction
+	- Ploymorphism
+	- Inheritance
+17. Hashcode and equals method : Done
+18. Comparator and Comparable : Done
+	- Comprator : Use compare --> multiple comparsion is possible
+	- Comparable : Use compareTo method --> Only one comparsion possible
+19. Searlization : Done
+	- Transient : Done
+	- Marshelling
+20. Stateful vs Stateless 
+21. Junit : Done 
+22. Inner classes
+	- Nested Inner Class
+	- Method Local Inner Classes
+	- Static Nested Classes
+	- Anonymous Inner Classes
+23. Static
+	- Variable
+	- Method
+	- Block
+	- Neasted class
+	- Class
+24. Spring
+	- Core
+	- Data
+	- Web
+	- AOP
+		- Aspect : An aspect is a modularization of a concern that cuts across multiple classes.
+		- Joinpoint : A Joinpoint is a point during the execution of a program
+		- Pointcut : A Pointcut is a predicate that helps match an Advice to be applied by an Aspect at a particular JoinPoint.
+		- Advice : An Advice is an action taken by an aspect at a particular Joinpoint. Different types of advice include 
+			- around
+			- before
+			- after
+			- after-returning
+			- after-throwing
+	- Context
+		- AnnotationConfigApplicationContext
+		- AnnotationConfigWebApplicationContext
+		- XmlWebApplicationContext
+		- FileSystemXMLApplicationContext
+		- ClassPathXmlApplicationContext
+		- 
+	- SpEL
+	- IoC :  Inversion of Control is a principle in software engineering which transfers the control of objects or portions of a program to a container or framework. 
+	- DI Types : Dependency injection is a pattern we can use to implement IoC, where the control being inverted is setting an object's dependencies.
+		- Constructor
+		- Setter
+		- Field
+	- Bean 
+		- What is bean
+		- Scope
+			- Singleton
+			- Prototype
+			- Session
+			- Request
+			- Global Session
+		- Life cycle
+			- The spring container finds the bean’s definition from the XML file and instantiates the bean.
+			- Spring populates all of the properties as specified in the bean definition (DI).
+			- BeanNameAware -> setBeanName
+			- BeanFactoryAware -> setBeanFactory()
+			- BeanPostProcessor -> postProcessorBeforeInitailization
+			- InitalizingBean -> afterPropertySet()
+			- BeanPostProcessor -> postProcessorAfterInitalization
+			- DisposableBean -> destroy
+	- Aware interfaces
+		- ApplicationContextAware
+		- BeanFactoryAware
+		- BeanNameAware
+		- MessageSourceAware
+		- ServletContextAware
+		- ServletConfigAware
+		- ApplicationEventPublisherAware
+		- ResourceLoaderAware
+	- Design patterns
+		- Singleton
+		- Factory
+		- Template
+		- Proxy
+		- Prototype
+		- Adapter
+		- Front Controller
+		- DAO
+		- MVC
+	- Application events
+		- ContextRefreshedEvent
+		- ContextStartedEvent
+		- ContextStoppedEvent
+		- ContextClosedEvent
+		- ContextRefreshedEvent
+		- ApplicationStartingEvent
+		- ApplicationEnvironmentPreparedEvent
+		- ApplicationContextInitializedEvent
+		- ApplicationPreparedEvent
+		- WebServerInitializedEvent
+		- ApplicationStartedEvent
+		- ApplicationReadyEvent
+		- ApplicationFailedEvent
+25. Aggregation, Composition Association
+	- Composition : Strict Has-a relationship where child does not exists if parent does not.
+	- Aggregation : Its a has-a relationship but no strict rule child can exists without parent.
+26. Exception Handling
+27. UML Diagrams
+28. Transaction Management 
+	- Propogation Types
+		- Required : Always executes in a transaction. If there is any existing transaction it uses it. If none exists then only a new one is created
+		- Supports : It may or may not run in a transaction.  If current transaction exists then it is supported. If none exists then gets executed with out transaction.
+		- Not Supported : Always executes without a transaction. If there is any existing transaction it gets suspended.
+		- Requires New : Always executes in a new transaction. It throws an exception if there is an existing transaction.
+		- Never : Always executes with out any transaction. It throws an exception if there is an existing transaction
+		- Mandatory : Always executes in a transaction. If there is any existing transaction it is used. If there is no existing transaction it will throw an exception.
+29. Algorithms
+	- Sorting
+		- Bubble
+		- Selection
+		- Insertion
+		- Merge
+		- Heap
+		- Quick
+	-Searching
+		- Binary
+		- Hashing
+30. Security
+	- oAuth
+		- 1.0
+			- Digital Signature required with each request
+			- Resource server and Auth Server were same. Here we have client, resource owner, service provider
+		- 2.0
+			- No digital signature required
+			- Segregation of roles, here we have client, resource owner, authentication server, resource server
+
+31. Docker
+	- Is a set of tools for building and running containers, on your laptop, or on a bunch of servers.
+	- Manage group of container on single host
+	- manual scaling required
+	- Run multi container application using docker-compose
+	- Entrypoint : entrypoint behaves similarly to cmd. And in addition, it allows us to customize the command executed at startup.
+	- CMD : Use to specify default command when the container is starting. cmd is ignored when we pass any arguments.
+	- RUN : executes while building an image
+32. Kubernetes
+	- Is a tool for deploying and managing containers on your servers, or in the cloud
+	- Manages a cluster of hosts running any compatible container runtime
+	- autoscale
+	- Storage, logs, monitoring
+	- Support autoatic creation and managing networks, load balancing
+	- Container scheduling
+33. Kafka
+	- Topic:
+		- Topic is a specific category which keep the stream of messages.
+		- Topic split into partition.
+		- For each topic, there at least one partition should be there.
+		- Each partition contains message or payload in a non-modified ordered sequence. 
+		- Each message with in a partition has an identifier, which is called as a offset.
+		- A topic has a name, and it must be unique across the cluster. 
+		- Producer need topic to publish the payload. 
+		- Consumer pulled the same payload from the consumer.
+	- Producer: Using this, one can issue communications to the topic.
+	- Consumer: It endures to a variety of topics and takes data from brokers.
+	- Broker: 
+		- Broker are the system which is responsible to maintaining the publish data.
+		- Each broker may have one or more than one partition. 
+		- Kafka contain multiple broker to main the load balancer.
+		- Kafka broker are stateless 
+	- Partition : 
+		- Partition is a logical grouping of data.
+		- Partitions allow you to parallelize a topic by splitting the data in a topic across multiple brokers.
+		- There are one or more than one partition can group in topic.
+		- Each partition can be placed on a separate machine to allow for multiple consumer to read the topic parallel. 
+	- Consumer Group :
+		- Group of consumers reading from a topic
+		- Kafka make sure one consumer can read message from topic only once
+		- 
+	- Acknowlege :
+		0 : producer sends the data to the broker but does not wait for the acknowledgement
+		1 : producer sends the data to the broker and wait for the acknowledgement from leader
+		2 : the acknowledgment is done by both the leader and its followers. When they successfully acknowledge the data, it means the data is successfully received
+	- Replication Factor :
+		Apache Kafka ensures high data availability by replicating data via the replication factor in Kafka. The replication factor is the number of nodes to which your data is replicated.
+	- 
+34. Openshift
+35. Spring Batch
+	- Workflow :
+		- JobLauncher is initiated from the job scheduler.
+		- The JobLauncher executes the job.
+		- Job performs the step.
+		- Step uses ItemReader to get input data.
+		- ItemProcessor is used to process input data in Step.
+		- ItemWriter is used by Step to output processed data.
+36. Immutable
+37. Wiremock
+38. Reflection
+39. mTLS 
+40. Annotation
+	- RetentionPolicy:
+		- Runtime
+		- Class
+		- Source
+	- Target :
+		- Type
+		- Field
+		- Method
+		- Parameter
+		- Constructor
+		- Package
+		- Module
+41. Session Management
+	- How to handle
+		- Cookies
+		- Hidden Field
+		- URL Rewritting
+		- HttpSession
+	- How to Manage
+		- Sticky Session
+		- Session Replication
+		- Session Data in Persistence Store
+	- Modules
+		- Spring Session Core
+		- Spring Session Data Redis
+		- Spring Session JDBC
+		- Spring Session Hazelcast
+42. Spring Security
+	- Spring Security is a framework that focuses on providing authentication and authorization mechanisms to Spring applications
+	- Filter Chain
+	- Predefined Filters
+		- SecurityContextPersistenceFilter
+			- Stores the SecurityContext contents between HTTP requests. It also clears SecurityContextHolder when a request is finished.
+		- ConcurrentSessionFilter
+			- It is responsible for handling concurrent sessions. Its purpose is to refresh the last modified time of the request's session and to ensure the session hasn't expired.
+		- UsernamePasswordAuthenticationFilter
+			- It's the most popular authentication filter and is the one that's most often customized.
+		- ExceptionTranslationFilter
+			- This filter resides above FilterSecurityInterceptor in the security filter stack. Although it doesn't perform actual security enforcement, it handles exceptions thrown by the security interceptors and returns valid and suitable HTTP responses.
+		- FilterSecurityInterceptor
+			- It is responsible for securing HTTP resources (web URIs), and raising or throwing authentication and authorization exceptions when access is denied.
+	- DelegatingFilterProxy
+		DelegatingFilterProxy is a proxy that delegates an incoming request to a group of filters (which are not managed as spring beans) provided by the Spring web framework. It provides full access to the Spring context's life cycle machinery and dependency injection.
+	- FilterChainProxy
+		FilterChainProxy is another servlet filter designed to invoke the appropriate filters based on the path of the incoming request. It contains information about the security filters that make up the security filter chain. It is not directly executed, but it is started by the DelegatingFilterProxy. 
+	- intercept-url 
+		It is used to restrict access to a particular URL
+	- PreAuthorize
+		- We can access the methods and properties of SecurityExpressionRoot while using @PreAuthorize. 
+		- It can work with Spring EL. 
+		- It supports multiple roles in conjunction with AND operator. 
+	- Secured
+		- We cannot access the methods and properties of SecurityExpressionRoot while using @Secured. 
+		- It cannot work with Spring EL. 
+		- It does not support multiple roles in conjunction with an AND operator. If more than one role is defined, they will be combined/treated using the OR operator.
+	- SecurityContext
+		In this, information/data about the currently authenticated user (also known as the principal) is stored. So, in order to obtain a username or any other information about the user, you must first obtain the SecurityContext.
+	- SecurityContextHolder
+		- Retrieving the currently authenticated principal is easiest via a static call to the SecurityContextHolder. As a helper class, it provides access to the security context. By default, it uses a ThreadLocal object to store SecurityContext, so SecurityContext is always accessible to methods in the same thread of execution, even if SecurityContext isn't passed around
+	- PreAuthorize 
+	- PreFilter 
+	- PostAuthorize 
+	- PostFilter  
+	- AuthenticationManager 
+		- How authentication will happen
+		- AuthenticationManager contains references to all the AuthenticationProviders. AuthenticationManager is the strategy interface for authentication
+	- ProviderManager :
+		The default implementation of AuthenticationManager is ProviderManager. It does not handle the authentication request itself, rather delegates the authentication process to a list of configured AuthenticationProviders. Each authenticationprovider in turn is queried to see if it can handle the authentication request.
+	- 
